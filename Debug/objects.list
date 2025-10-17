@@ -1,0 +1,6 @@
+"./Src/003_button_external_interrupt.o"
+"./Src/syscalls.o"
+"./Src/sysmem.o"
+"./Startup/startup_stm32f407vgtx.o"
+"./drivers/Src/stm32f407xx_gpio.o"
+"./drivers/Src/stm32f407xx_spi.o"
