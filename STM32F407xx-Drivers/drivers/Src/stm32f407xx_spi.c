@@ -32,15 +32,33 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
 {
     if(EnorDi == ENABLE)
     {
-        if(pSPIx == SPI1) SPI1_PCLK_EN();
-        else if(pSPIx == SPI2) SPI2_PCLK_EN();
-        else if(pSPIx == SPI3) SPI3_PCLK_EN();
+        if(pSPIx == SPI1)
+        {
+            SPI1_PCLK_EN();
+        }
+        else if(pSPIx == SPI2)
+        {
+            SPI2_PCLK_EN();
+        }
+        else if(pSPIx == SPI3)
+        {
+            SPI3_PCLK_EN();
+        }
     }
     else
     {
-        if(pSPIx == SPI1) SPI1_PCLK_DI();
-        else if(pSPIx == SPI2) SPI2_PCLK_DI();
-        else if(pSPIx == SPI3) SPI3_PCLK_DI();
+        if(pSPIx == SPI1)
+        {
+            SPI1_PCLK_DI();
+        }
+        else if(pSPIx == SPI2)
+        {
+            SPI2_PCLK_DI();
+        }
+        else if(pSPIx == SPI3)
+        {
+            SPI3_PCLK_DI();
+        }
     }
 }
 
@@ -70,9 +88,13 @@ void SPI_Init(SPI_Handle_t *pSPIHandle)
 
     /* 2. Configure bus config */
     if(pSPIHandle->SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_FD)
+    {
         tempreg &= ~(1U << SPI_CR1_BIDIMODE);
+    }
     else if(pSPIHandle->SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_HD)
+    {
         tempreg |= (1U << SPI_CR1_BIDIMODE);
+    }
     else if(pSPIHandle->SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_SIMPLEX_RX)
     {
         tempreg &= ~(1U << SPI_CR1_BIDIMODE);
@@ -110,9 +132,18 @@ void SPI_Init(SPI_Handle_t *pSPIHandle)
  *****************************************************************/
 void SPI_DeInit(SPI_RegDef_t *pSPIx)
 {
-    if(pSPIx == SPI1) SPI1_REG_RESET();
-    else if(pSPIx == SPI2) SPI2_REG_RESET();
-    else if(pSPIx == SPI3) SPI3_REG_RESET();
+    if(pSPIx == SPI1)
+    {
+        SPI1_REG_RESET();
+    }
+    else if(pSPIx == SPI2)
+    {
+        SPI2_REG_RESET();
+    }
+    else if(pSPIx == SPI3)
+    {
+        SPI3_REG_RESET();
+    }
 }
 
 /*****************************************************************
@@ -131,7 +162,11 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx)
  *****************************************************************/
 uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t FlagName)
 {
-    return (pSPIx->SR & FlagName) ? SET : RESET;
+    if(pSPIx->SR & FlagName)
+    {
+        return SET;
+    }
+    return RESET;
 }
 
 /*****************************************************************
@@ -268,7 +303,7 @@ uint8_t SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t
 /*****************************************************************
  * @fn          - SPI_PeripheralControl
  *
- * @brief       - Enables or disables the SPI peripheral
+ * @brief       - Enables or disables SPI peripheral
  *
  * @param[in]   - pSPIx   : Base address of the SPI peripheral
  * @param[in]   - EnorDi  : ENABLE or DISABLE macro
@@ -280,8 +315,14 @@ uint8_t SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t
  *****************************************************************/
 void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
 {
-    if(EnorDi == ENABLE) pSPIx->CR1 |= (1U << SPI_CR1_SPE);
-    else pSPIx->CR1 &= ~(1U << SPI_CR1_SPE);
+    if(EnorDi == ENABLE)
+    {
+        pSPIx->CR1 |= (1U << SPI_CR1_SPE);
+    }
+    else
+    {
+        pSPIx->CR1 &= ~(1U << SPI_CR1_SPE);
+    }
 }
 
 /*****************************************************************
@@ -299,8 +340,14 @@ void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
  *****************************************************************/
 void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
 {
-    if(EnorDi == ENABLE) pSPIx->CR1 |= (1U << SPI_CR1_SSI);
-    else pSPIx->CR1 &= ~(1U << SPI_CR1_SSI);
+    if(EnorDi == ENABLE)
+    {
+        pSPIx->CR1 |= (1U << SPI_CR1_SSI);
+    }
+    else
+    {
+        pSPIx->CR1 &= ~(1U << SPI_CR1_SSI);
+    }
 }
 
 /*****************************************************************
@@ -318,8 +365,14 @@ void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
  *****************************************************************/
 void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
 {
-    if(EnorDi == ENABLE) pSPIx->CR2 |= (1U << SPI_CR2_SSOE);
-    else pSPIx->CR2 &= ~(1U << SPI_CR2_SSOE);
+    if(EnorDi == ENABLE)
+    {
+        pSPIx->CR2 |= (1U << SPI_CR2_SSOE);
+    }
+    else
+    {
+        pSPIx->CR2 &= ~(1U << SPI_CR2_SSOE);
+    }
 }
 
 /*****************************************************************
@@ -339,15 +392,33 @@ void SPI_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi)
 {
     if(EnorDi == ENABLE)
     {
-        if(IRQNumber <= 31) *NVIC_ISER0 |= (1U << IRQNumber);
-        else if(IRQNumber > 31 && IRQNumber < 64) *NVIC_ISER1 |= (1U << (IRQNumber % 32));
-        else if(IRQNumber >= 64 && IRQNumber < 96) *NVIC_ISER2 |= (1U << (IRQNumber % 64));
+        if(IRQNumber <= 31)
+        {
+            *NVIC_ISER0 |= (1U << IRQNumber);
+        }
+        else if(IRQNumber > 31 && IRQNumber < 64)
+        {
+            *NVIC_ISER1 |= (1U << (IRQNumber % 32));
+        }
+        else if(IRQNumber >= 64 && IRQNumber < 96)
+        {
+            *NVIC_ISER2 |= (1U << (IRQNumber % 64));
+        }
     }
     else
     {
-        if(IRQNumber <= 31) *NVIC_ICER0 |= (1U << IRQNumber);
-        else if(IRQNumber > 31 && IRQNumber < 64) *NVIC_ICER1 |= (1U << (IRQNumber % 32));
-        else if(IRQNumber >= 64 && IRQNumber < 96) *NVIC_ICER2 |= (1U << (IRQNumber % 64));
+        if(IRQNumber <= 31)
+        {
+            *NVIC_ICER0 |= (1U << IRQNumber);
+        }
+        else if(IRQNumber > 31 && IRQNumber < 64)
+        {
+            *NVIC_ICER1 |= (1U << (IRQNumber % 32));
+        }
+        else if(IRQNumber >= 64 && IRQNumber < 96)
+        {
+            *NVIC_ICER2 |= (1U << (IRQNumber % 64));
+        }
     }
 }
 
@@ -391,17 +462,26 @@ void SPI_IRQHandling(SPI_Handle_t *pSPIHandle)
     /* TXE */
     temp1 = (pSPIHandle->pSPIx->SR & (1U << SPI_SR_TXE)) ? 1 : 0;
     temp2 = (pSPIHandle->pSPIx->CR2 & (1U << SPI_CR2_TXEIE)) ? 1 : 0;
-    if(temp1 && temp2) SPI_Txe_Interrupt_Handle(pSPIHandle);
+    if(temp1 && temp2)
+    {
+        SPI_Txe_Interrupt_Handle(pSPIHandle);
+    }
 
     /* RXNE */
     temp1 = (pSPIHandle->pSPIx->SR & (1U << SPI_SR_RXNE)) ? 1 : 0;
     temp2 = (pSPIHandle->pSPIx->CR2 & (1U << SPI_CR2_RXNEIE)) ? 1 : 0;
-    if(temp1 && temp2) SPI_Rxne_Interrupt_Handle(pSPIHandle);
+    if(temp1 && temp2)
+    {
+        SPI_Rxne_Interrupt_Handle(pSPIHandle);
+    }
 
     /* OVR */
     temp1 = (pSPIHandle->pSPIx->SR & (1U << SPI_SR_OVR)) ? 1 : 0;
     temp2 = (pSPIHandle->pSPIx->CR2 & (1U << SPI_CR2_ERRIE)) ? 1 : 0;
-    if(temp1 && temp2) SPI_Ovr_Interrupt_Handle(pSPIHandle);
+    if(temp1 && temp2)
+    {
+        SPI_Ovr_Interrupt_Handle(pSPIHandle);
+    }
 }
 
 /*****************************************************************
@@ -422,14 +502,23 @@ static void SPI_Txe_Interrupt_Handle(SPI_Handle_t *pSPIHandle)
     {
         pSPIHandle->pSPIx->DR = *((uint16_t*)pSPIHandle->pTxBuffer);
         pSPIHandle->pTxBuffer += 2;
-        if(pSPIHandle->TxLen >= 2) pSPIHandle->TxLen -= 2;
-        else pSPIHandle->TxLen = 0;
+        if(pSPIHandle->TxLen >= 2)
+        {
+            pSPIHandle->TxLen -= 2;
+        }
+        else
+        {
+            pSPIHandle->TxLen = 0;
+        }
     }
     else
     {
         pSPIHandle->pSPIx->DR = *(pSPIHandle->pTxBuffer);
         pSPIHandle->pTxBuffer++;
-        if(pSPIHandle->TxLen > 0) pSPIHandle->TxLen--;
+        if(pSPIHandle->TxLen > 0)
+        {
+            pSPIHandle->TxLen--;
+        }
     }
 
     if(pSPIHandle->TxLen == 0)
@@ -458,14 +547,23 @@ static void SPI_Rxne_Interrupt_Handle(SPI_Handle_t *pSPIHandle)
     {
         *((uint16_t*)pSPIHandle->pRxBuffer) = (uint16_t)pSPIHandle->pSPIx->DR;
         pSPIHandle->pRxBuffer += 2;
-        if(pSPIHandle->RxLen >= 2) pSPIHandle->RxLen -= 2;
-        else pSPIHandle->RxLen = 0;
+        if(pSPIHandle->RxLen >= 2)
+        {
+            pSPIHandle->RxLen -= 2;
+        }
+        else
+        {
+            pSPIHandle->RxLen = 0;
+        }
     }
     else
     {
         *(pSPIHandle->pRxBuffer) = (uint8_t)pSPIHandle->pSPIx->DR;
         pSPIHandle->pRxBuffer++;
-        if(pSPIHandle->RxLen > 0) pSPIHandle->RxLen--;
+        if(pSPIHandle->RxLen > 0)
+        {
+            pSPIHandle->RxLen--;
+        }
     }
 
     if(pSPIHandle->RxLen == 0)

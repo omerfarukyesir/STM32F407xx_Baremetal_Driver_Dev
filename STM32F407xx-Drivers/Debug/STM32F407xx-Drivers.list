@@ -31,23 +31,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  13 .comment      00000043  00000000  00000000  00010980  2**0
                   CONTENTS, READONLY
- 14 .debug_info   000013e5  00000000  00000000  000109c3  2**0
+ 14 .debug_info   000013ef  00000000  00000000  000109c3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_abbrev 0000044e  00000000  00000000  00011da8  2**0
+ 15 .debug_abbrev 0000047d  00000000  00000000  00011db2  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_aranges 00000170  00000000  00000000  000121f8  2**3
+ 16 .debug_aranges 00000170  00000000  00000000  00012230  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_rnglists 0000010b  00000000  00000000  00012368  2**0
+ 17 .debug_rnglists 0000010b  00000000  00000000  000123a0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_macro  0000226c  00000000  00000000  00012473  2**0
+ 18 .debug_macro  0000236f  00000000  00000000  000124ab  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_line   00001c17  00000000  00000000  000146df  2**0
+ 19 .debug_line   00001b4c  00000000  00000000  0001481a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_str    00009281  00000000  00000000  000162f6  2**0
+ 20 .debug_str    00009507  00000000  00000000  00016366  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_frame  00000530  00000000  00000000  0001f578  2**2
+ 21 .debug_frame  00000530  00000000  00000000  0001f870  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 00000088  00000000  00000000  0001faa8  2**0
+ 22 .debug_line_str 00000088  00000000  00000000  0001fda0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -891,28 +891,31 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
  8000672:	2b01      	cmp	r3, #1
  8000674:	d120      	bne.n	80006b8 <SPI_PeriClockControl+0x54>
     {
-        if(pSPIx == SPI1) SPI1_PCLK_EN();
+        if(pSPIx == SPI1)
  8000676:	687b      	ldr	r3, [r7, #4]
  8000678:	4a22      	ldr	r2, [pc, #136]	; (8000704 <SPI_PeriClockControl+0xa0>)
  800067a:	4293      	cmp	r3, r2
  800067c:	d106      	bne.n	800068c <SPI_PeriClockControl+0x28>
+        {
+            SPI1_PCLK_EN();
  800067e:	4b22      	ldr	r3, [pc, #136]	; (8000708 <SPI_PeriClockControl+0xa4>)
  8000680:	6c5b      	ldr	r3, [r3, #68]	; 0x44
  8000682:	4a21      	ldr	r2, [pc, #132]	; (8000708 <SPI_PeriClockControl+0xa4>)
  8000684:	f443 5380 	orr.w	r3, r3, #4096	; 0x1000
  8000688:	6453      	str	r3, [r2, #68]	; 0x44
-    {
-        if(pSPIx == SPI1) SPI1_PCLK_DI();
-        else if(pSPIx == SPI2) SPI2_PCLK_DI();
-        else if(pSPIx == SPI3) SPI3_PCLK_DI();
+        else if(pSPIx == SPI3)
+        {
+            SPI3_PCLK_DI();
+        }
     }
 }
  800068a:	e035      	b.n	80006f8 <SPI_PeriClockControl+0x94>
-        else if(pSPIx == SPI2) SPI2_PCLK_EN();
+        else if(pSPIx == SPI2)
  800068c:	687b      	ldr	r3, [r7, #4]
  800068e:	4a1f      	ldr	r2, [pc, #124]	; (800070c <SPI_PeriClockControl+0xa8>)
  8000690:	4293      	cmp	r3, r2
  8000692:	d106      	bne.n	80006a2 <SPI_PeriClockControl+0x3e>
+            SPI2_PCLK_EN();
  8000694:	4b1c      	ldr	r3, [pc, #112]	; (8000708 <SPI_PeriClockControl+0xa4>)
  8000696:	6c1b      	ldr	r3, [r3, #64]	; 0x40
  8000698:	4a1b      	ldr	r2, [pc, #108]	; (8000708 <SPI_PeriClockControl+0xa4>)
@@ -920,11 +923,12 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
  800069e:	6413      	str	r3, [r2, #64]	; 0x40
 }
  80006a0:	e02a      	b.n	80006f8 <SPI_PeriClockControl+0x94>
-        else if(pSPIx == SPI3) SPI3_PCLK_EN();
+        else if(pSPIx == SPI3)
  80006a2:	687b      	ldr	r3, [r7, #4]
  80006a4:	4a1a      	ldr	r2, [pc, #104]	; (8000710 <SPI_PeriClockControl+0xac>)
  80006a6:	4293      	cmp	r3, r2
  80006a8:	d126      	bne.n	80006f8 <SPI_PeriClockControl+0x94>
+            SPI3_PCLK_EN();
  80006aa:	4b17      	ldr	r3, [pc, #92]	; (8000708 <SPI_PeriClockControl+0xa4>)
  80006ac:	6c1b      	ldr	r3, [r3, #64]	; 0x40
  80006ae:	4a16      	ldr	r2, [pc, #88]	; (8000708 <SPI_PeriClockControl+0xa4>)
@@ -932,11 +936,12 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
  80006b4:	6413      	str	r3, [r2, #64]	; 0x40
 }
  80006b6:	e01f      	b.n	80006f8 <SPI_PeriClockControl+0x94>
-        if(pSPIx == SPI1) SPI1_PCLK_DI();
+        if(pSPIx == SPI1)
  80006b8:	687b      	ldr	r3, [r7, #4]
  80006ba:	4a12      	ldr	r2, [pc, #72]	; (8000704 <SPI_PeriClockControl+0xa0>)
  80006bc:	4293      	cmp	r3, r2
  80006be:	d106      	bne.n	80006ce <SPI_PeriClockControl+0x6a>
+            SPI1_PCLK_DI();
  80006c0:	4b11      	ldr	r3, [pc, #68]	; (8000708 <SPI_PeriClockControl+0xa4>)
  80006c2:	6c5b      	ldr	r3, [r3, #68]	; 0x44
  80006c4:	4a10      	ldr	r2, [pc, #64]	; (8000708 <SPI_PeriClockControl+0xa4>)
@@ -944,11 +949,12 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
  80006ca:	6453      	str	r3, [r2, #68]	; 0x44
 }
  80006cc:	e014      	b.n	80006f8 <SPI_PeriClockControl+0x94>
-        else if(pSPIx == SPI2) SPI2_PCLK_DI();
+        else if(pSPIx == SPI2)
  80006ce:	687b      	ldr	r3, [r7, #4]
  80006d0:	4a0e      	ldr	r2, [pc, #56]	; (800070c <SPI_PeriClockControl+0xa8>)
  80006d2:	4293      	cmp	r3, r2
  80006d4:	d106      	bne.n	80006e4 <SPI_PeriClockControl+0x80>
+            SPI2_PCLK_DI();
  80006d6:	4b0c      	ldr	r3, [pc, #48]	; (8000708 <SPI_PeriClockControl+0xa4>)
  80006d8:	6c1b      	ldr	r3, [r3, #64]	; 0x40
  80006da:	4a0b      	ldr	r2, [pc, #44]	; (8000708 <SPI_PeriClockControl+0xa4>)
@@ -956,11 +962,12 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
  80006e0:	6413      	str	r3, [r2, #64]	; 0x40
 }
  80006e2:	e009      	b.n	80006f8 <SPI_PeriClockControl+0x94>
-        else if(pSPIx == SPI3) SPI3_PCLK_DI();
+        else if(pSPIx == SPI3)
  80006e4:	687b      	ldr	r3, [r7, #4]
  80006e6:	4a0a      	ldr	r2, [pc, #40]	; (8000710 <SPI_PeriClockControl+0xac>)
  80006e8:	4293      	cmp	r3, r2
  80006ea:	d105      	bne.n	80006f8 <SPI_PeriClockControl+0x94>
+            SPI3_PCLK_DI();
  80006ec:	4b06      	ldr	r3, [pc, #24]	; (8000708 <SPI_PeriClockControl+0xa4>)
  80006ee:	6c1b      	ldr	r3, [r3, #64]	; 0x40
  80006f0:	4a05      	ldr	r2, [pc, #20]	; (8000708 <SPI_PeriClockControl+0xa4>)
@@ -1016,21 +1023,25 @@ void SPI_Init(SPI_Handle_t *pSPIHandle)
  800073c:	795b      	ldrb	r3, [r3, #5]
  800073e:	2b01      	cmp	r3, #1
  8000740:	d104      	bne.n	800074c <SPI_Init+0x38>
+    {
         tempreg &= ~(1U << SPI_CR1_BIDIMODE);
  8000742:	68fb      	ldr	r3, [r7, #12]
  8000744:	f423 4300 	bic.w	r3, r3, #32768	; 0x8000
  8000748:	60fb      	str	r3, [r7, #12]
  800074a:	e014      	b.n	8000776 <SPI_Init+0x62>
+    }
     else if(pSPIHandle->SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_HD)
  800074c:	687b      	ldr	r3, [r7, #4]
  800074e:	795b      	ldrb	r3, [r3, #5]
  8000750:	2b02      	cmp	r3, #2
  8000752:	d104      	bne.n	800075e <SPI_Init+0x4a>
+    {
         tempreg |= (1U << SPI_CR1_BIDIMODE);
  8000754:	68fb      	ldr	r3, [r7, #12]
  8000756:	f443 4300 	orr.w	r3, r3, #32768	; 0x8000
  800075a:	60fb      	str	r3, [r7, #12]
  800075c:	e00b      	b.n	8000776 <SPI_Init+0x62>
+    }
     else if(pSPIHandle->SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_SIMPLEX_RX)
  800075e:	687b      	ldr	r3, [r7, #4]
  8000760:	795b      	ldrb	r3, [r3, #5]
@@ -1118,16 +1129,20 @@ uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t FlagName)
  80007ce:	af00      	add	r7, sp, #0
  80007d0:	6078      	str	r0, [r7, #4]
  80007d2:	6039      	str	r1, [r7, #0]
-    return (pSPIx->SR & FlagName) ? SET : RESET;
+    if(pSPIx->SR & FlagName)
  80007d4:	687b      	ldr	r3, [r7, #4]
  80007d6:	689a      	ldr	r2, [r3, #8]
  80007d8:	683b      	ldr	r3, [r7, #0]
  80007da:	4013      	ands	r3, r2
  80007dc:	2b00      	cmp	r3, #0
- 80007de:	bf14      	ite	ne
- 80007e0:	2301      	movne	r3, #1
- 80007e2:	2300      	moveq	r3, #0
- 80007e4:	b2db      	uxtb	r3, r3
+ 80007de:	d001      	beq.n	80007e4 <SPI_GetFlagStatus+0x1a>
+    {
+        return SET;
+ 80007e0:	2301      	movs	r3, #1
+ 80007e2:	e000      	b.n	80007e6 <SPI_GetFlagStatus+0x1c>
+    }
+    return RESET;
+ 80007e4:	2300      	movs	r3, #0
 }
  80007e6:	4618      	mov	r0, r3
  80007e8:	370c      	adds	r7, #12
@@ -1234,19 +1249,25 @@ void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
  8000870:	6078      	str	r0, [r7, #4]
  8000872:	460b      	mov	r3, r1
  8000874:	70fb      	strb	r3, [r7, #3]
-    if(EnorDi == ENABLE) pSPIx->CR1 |= (1U << SPI_CR1_SPE);
+    if(EnorDi == ENABLE)
  8000876:	78fb      	ldrb	r3, [r7, #3]
  8000878:	2b01      	cmp	r3, #1
  800087a:	d106      	bne.n	800088a <SPI_PeripheralControl+0x20>
+    {
+        pSPIx->CR1 |= (1U << SPI_CR1_SPE);
  800087c:	687b      	ldr	r3, [r7, #4]
  800087e:	681b      	ldr	r3, [r3, #0]
  8000880:	f043 0240 	orr.w	r2, r3, #64	; 0x40
  8000884:	687b      	ldr	r3, [r7, #4]
  8000886:	601a      	str	r2, [r3, #0]
-    else pSPIx->CR1 &= ~(1U << SPI_CR1_SPE);
+    }
+    else
+    {
+        pSPIx->CR1 &= ~(1U << SPI_CR1_SPE);
+    }
 }
  8000888:	e005      	b.n	8000896 <SPI_PeripheralControl+0x2c>
-    else pSPIx->CR1 &= ~(1U << SPI_CR1_SPE);
+        pSPIx->CR1 &= ~(1U << SPI_CR1_SPE);
  800088a:	687b      	ldr	r3, [r7, #4]
  800088c:	681b      	ldr	r3, [r3, #0]
  800088e:	f023 0240 	bic.w	r2, r3, #64	; 0x40
@@ -1272,19 +1293,25 @@ void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
  80008a8:	6078      	str	r0, [r7, #4]
  80008aa:	460b      	mov	r3, r1
  80008ac:	70fb      	strb	r3, [r7, #3]
-    if(EnorDi == ENABLE) pSPIx->CR1 |= (1U << SPI_CR1_SSI);
+    if(EnorDi == ENABLE)
  80008ae:	78fb      	ldrb	r3, [r7, #3]
  80008b0:	2b01      	cmp	r3, #1
  80008b2:	d106      	bne.n	80008c2 <SPI_SSIConfig+0x20>
+    {
+        pSPIx->CR1 |= (1U << SPI_CR1_SSI);
  80008b4:	687b      	ldr	r3, [r7, #4]
  80008b6:	681b      	ldr	r3, [r3, #0]
  80008b8:	f443 7280 	orr.w	r2, r3, #256	; 0x100
  80008bc:	687b      	ldr	r3, [r7, #4]
  80008be:	601a      	str	r2, [r3, #0]
-    else pSPIx->CR1 &= ~(1U << SPI_CR1_SSI);
+    }
+    else
+    {
+        pSPIx->CR1 &= ~(1U << SPI_CR1_SSI);
+    }
 }
  80008c0:	e005      	b.n	80008ce <SPI_SSIConfig+0x2c>
-    else pSPIx->CR1 &= ~(1U << SPI_CR1_SSI);
+        pSPIx->CR1 &= ~(1U << SPI_CR1_SSI);
  80008c2:	687b      	ldr	r3, [r7, #4]
  80008c4:	681b      	ldr	r3, [r3, #0]
  80008c6:	f423 7280 	bic.w	r2, r3, #256	; 0x100
