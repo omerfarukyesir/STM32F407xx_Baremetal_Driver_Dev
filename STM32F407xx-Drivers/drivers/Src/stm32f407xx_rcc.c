@@ -172,7 +172,7 @@ uint32_t RCC_GetPCLK2Value(void)
  *********************************************************************/
 uint32_t RCC_GetPLLOutputClock(void)
 {
-	// TODO: Implement PLL calculation based on:
+	
 	// PLL_VCO = (HSE_VALUE or HSI_VALUE / PLLM) * PLLN
 	// PLL_OUTPUT = PLL_VCO / PLLP
 	return 0;
